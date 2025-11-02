@@ -1,5 +1,5 @@
 
-# ✨ Optimized approach to rotating a square matrix
+# 🏆 Optimized approach to rotating a square matrix
 
 ## 📝 Definition
 
@@ -8,8 +8,8 @@ without using extra space for another matrix.
 
 ### Benefits of the optimized algorithm
 
-- **Time complexity** : O(N²) elements are visited twice at most
-- **Space complexity** : O(1) rotation happenes in place, no extra matrix needed.
+- **Time complexity** : O(N²) elements are visited twice at most.
+- **Space complexity** : O(1) rotation happens in place, no extra matrix needed.
 - **Simplisity** : just transpose and reverse. no complex math required.
 - **Scalability** : works smoothly with any matrix size.
     
@@ -30,12 +30,20 @@ without using extra space for another matrix.
 ## Pseudocode
 
 ```
-function rotateOptimized(matrix[N][N]):
-    for i = 0 to N-1:
-        for j = i to N-1:
-            swap(matrix[i][j], matrix[j][i])
-    for i = 0 to N-1:
-        reverse elements matrix[i][0 .. N-1]
+    FUNCTION rotateOptimized(matrix, n)
+        // Transpose the matrix
+        FOR i ← 0 to n-1
+            FOR j ← i+1 to n-1
+                SWAP matrix[i][j] and matrix[j][i]
+        // Reverse each row
+        FOR i ← 0 to n-1
+            left ← 0
+            right ← n-1
+            WHILE left < right
+                SWAP matrix[i][left] and matrix[i][right]
+                INCREMENT left
+                DECREMENT right
+
 ```
 ---
 
@@ -58,6 +66,7 @@ function rotateOptimized(matrix[N][N]):
 
 Best-case = Average-case = Worst-case
 
->Time O(N^2), Space O(1)
+- ⏱️ Time Complexity: O(N²)
+- 💾 Space Complexity: O(1)
 
 ---
