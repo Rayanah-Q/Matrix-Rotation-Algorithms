@@ -1,4 +1,5 @@
 #include <iostream>
+#include "timer.h"
 using namespace std;
 
 const int MAX = 200;
@@ -11,7 +12,7 @@ void printMatrix(int a[][MAX], int n) {
         cout << "\n";
     }
 }
-void rot90Clcwise(int a[][MAX], int n) {
+void rotateOptimized(int a[][MAX], int n) {
     //Transpose:
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
@@ -34,12 +35,14 @@ void rot90Clcwise(int a[][MAX], int n) {
 }
 int main() {
     int n;
+    Timer t;
     cout << "Enter n (square matrix size): ";
     cin >> n;
     if (n <= 0 || n > MAX) {
         cout << "invalid input! \n";
         return 0;
     }
+    
     int a[MAX][MAX];
     cout << "Enter " << n * n << " elements row-wise:\n";
     for (int i = 0; i < n; i++) {
@@ -47,13 +50,15 @@ int main() {
             cin >> a[i][j];
         }
     }
+    t.start();
     cout << "\nBefore rotation: \n";
     printMatrix(a, n);
 
-    rot90Clcwise(a, n);
+    rotateOptimized(a, n);
 
     cout << "\nAfter 90-degree clockwise rotation: \n";
     printMatrix(a, n);
-
+    t.stop();
+    t.printDuration(); 
     return 0;
 }
