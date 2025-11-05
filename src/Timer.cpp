@@ -1,4 +1,6 @@
 #include "Timer.h"
+Timer::Timer() {}
+Timer::~Timer() {}
 void Timer::start()
 {
     startTime = chrono::high_resolution_clock::now();
@@ -9,7 +11,7 @@ void Timer::stop()
 }
 
 void Timer::printDuration()
-{
-    auto duration = chrono::duration_cast<chrono::microseconds>(endTime - startTime);
-    cout << "Duration: " << duration.count() << " microseconds" << endl;
+{  
+    chrono::duration<double> duration = endTime - startTime;
+    cout << "Duration time: " << duration.count() << " seconds" << endl;
 }
