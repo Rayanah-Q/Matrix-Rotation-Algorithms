@@ -2,18 +2,21 @@
 #include "timer.h"
 using namespace std;
 
-const int MAX = 200;
+const int MAX = 400; // أكبر حجم للمصفوفة ممكن تجربينه
 
+// دالة لطباعة المصفوفة (اختيارية)
 void printMatrix(int a[][MAX], int n) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            cout << a[i][j] << "";
+            cout << a[i][j] << " ";
         }
         cout << "\n";
     }
 }
+
+// =================== Optimized Rotation ===================
 void rotateOptimized(int a[][MAX], int n) {
-    //Transpose:
+    // 1. Transpose
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
             int temp = a[i][j];
@@ -21,7 +24,8 @@ void rotateOptimized(int a[][MAX], int n) {
             a[j][i] = temp;
         }
     }
-    //Reverse:
+
+    // 2. Reverse each row
     for (int i = 0; i < n; i++) {
         int l = 0, r = n - 1;
         while (l < r) {
@@ -33,32 +37,45 @@ void rotateOptimized(int a[][MAX], int n) {
         }
     }
 }
+// ===========================================================
+
+
+// =================== Main Function ===================
 int main() {
-    int n;
-    Timer t;
-    cout << "Enter n (square matrix size): ";
-    cin >> n;
-    if (n <= 0 || n > MAX) {
-        cout << "invalid input! \n";
-        return 0;
-    }
-    
-    int a[MAX][MAX];
-    cout << "Enter " << n * n << " elements row-wise:\n";
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cin >> a[i][j];
+    int sizes[] = { 10, 50, 100, 200, 300, 400 };
+
+    cout << "==============================================\n";
+    cout << "   Matrix Rotation Time Measurement (µs)\n";
+    cout << "==============================================\n";
+    cout << "Size\tExecution Time (µs)\n";
+    cout << "----------------------------------------------\n";
+
+    for (int s = 0; s < 6; s++) {
+        int n = sizes[s];
+        int a[MAX][MAX];
+
+        // تعبئة المصفوفة تلقائيًا
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                a[i][j] = 1;  // أو rand() % 100
+            }
         }
+
+        Timer t;
+        t.start();
+
+        // نكرر العملية أكثر من مرة عشان الزمن يصير واضح
+        for (int repeat = 0; repeat < 500; repeat++) {
+            rotateOptimized(a, n);
+        }
+
+        t.stop();
+
+        double duration = t.getDurationMicro();
+        cout << n << "x" << n << "\t" << duration << "\n";
     }
-    t.start();
-    cout << "\nBefore rotation: \n";
-    printMatrix(a, n);
 
-    rotateOptimized(a, n);
-
-    cout << "\nAfter 90-degree clockwise rotation: \n";
-    printMatrix(a, n);
-    t.stop();
-    t.printDuration(); 
+    cout << "==============================================\n";
     return 0;
 }
+
